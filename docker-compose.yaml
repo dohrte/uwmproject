@@ -1,0 +1,28 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: Passw0rd!     
+
+  dbup:
+    depends_on:
+      - sqlserver
+    build:
+      context: .
+      dockerfile: Dockerfile.DbUp 
+    environment:
+      - CONNECTION_STRING=Server=sqlserver,1433; Database=Garage; User Id=SA; Password=Passw0rd!; Trusted_connection=false;TrustServerCertificate=True
+  
+  api:
+    depends_on:
+      - dbup
+    build:
+      context: .
+      dockerfile: Dockerfile.Api 
+    environment:
+      - CONNECTION_STRING=Server=sqlserver,1433; Database=Garage; User Id=SA; Password=Passw0rd!; Trusted_connection=false;TrustServerCertificate=True
+    ports:
+      - 9980:8080

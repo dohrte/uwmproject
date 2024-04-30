@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="Scripts\CreateTable-0001.sql" />
+    <Content Remove="Scripts\PopulateData-0002.sql" />
+  </ItemGroup> 
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\CreateTable-0001.sql" CopyToOutputDirectory="Always" />
+    <EmbeddedResource Include="Scripts\PopulateData-0002.sql" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="dbup-sqlserver" Version="5.0.40" />
+  </ItemGroup>
+
+</Project>
